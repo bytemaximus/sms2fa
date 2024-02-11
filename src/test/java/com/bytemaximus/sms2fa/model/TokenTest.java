@@ -1,6 +1,8 @@
-package com.absoluz7.sms2fa.model;
+package com.bytemaximus.sms2fa.model;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,17 +11,14 @@ public class TokenTest {
     @Test
     public void builderTest() {
         Token token = Token.builder()
-                .id(1)
-                .apiKey("testApiKey")
-                .apiSecret("testApiSecret")
+                .credential(new Credential(1, "key", "secret", Collections.emptySet()))
                 .jwt("testJwt")
                 .expireAt("testExpireAt")
                 .responseLog("testResponseLog")
                 .build();
 
-        assertEquals(1, token.getId());
-        assertEquals("testApiKey", token.getApiKey());
-        assertEquals("testApiSecret", token.getApiSecret());
+        assertEquals(0, token.getId());
+        assertEquals("secret", token.getCredential().getApiSecret());
         assertEquals("testJwt", token.getJwt());
         assertEquals("testExpireAt", token.getExpireAt());
         assertEquals("testResponseLog", token.getResponseLog());

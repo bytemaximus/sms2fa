@@ -1,4 +1,4 @@
-package com.absoluz7.sms2fa;
+package com.bytemaximus.sms2fa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

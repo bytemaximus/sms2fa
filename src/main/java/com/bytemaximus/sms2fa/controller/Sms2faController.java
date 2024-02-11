@@ -1,5 +1,6 @@
-package com.absoluz7.sms2fa.controller;
+package com.bytemaximus.sms2fa.controller;
 
+import com.bytemaximus.sms2fa.service.CredentialService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +13,22 @@ import java.util.Map;
 @Log4j2
 public class Sms2faController {
 
+    private CredentialService credentialService;
+
+    public Sms2faController(CredentialService credentialService) {
+        this.credentialService = credentialService;
+    }
+
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             value = "/auth")
     public String authenticate(@RequestBody Map<String, String> payload) {
         String apiKey = payload.get("apiKey");
+        String apiSecret = payload.get("apiSecret");
+
+        credentialService.newCredential(apiKey, apiSecret);
+
 
         log.debug("Received new authentication request with API key: {}", apiKey);
 

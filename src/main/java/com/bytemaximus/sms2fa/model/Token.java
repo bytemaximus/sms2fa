@@ -1,4 +1,4 @@
-package com.absoluz7.sms2fa.model;
+package com.bytemaximus.sms2fa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,18 +10,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode(exclude = "id")
 public class Token {
 
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     @JsonIgnore
-    @Column(nullable = false)
-    private String apiKey;
-    @JsonIgnore
-    @Column(nullable = false)
-    private String apiSecret;
+    @ManyToOne(targetEntity = Credential.class)
+    private Credential credential;
     @JsonProperty("jwt")
     @Column(nullable = false)
     private String jwt;
