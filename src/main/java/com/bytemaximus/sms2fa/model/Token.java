@@ -2,8 +2,11 @@ package com.bytemaximus.sms2fa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.taimos.totp.TOTP;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Entity(name = "token")
 @Builder
@@ -25,7 +28,7 @@ public class Token {
     private String jwt;
     @JsonProperty("exp")
     @Column(nullable = false)
-    private String expireAt;
+    private Date expireAt;
     @JsonProperty("log")
     @Column(nullable = false)
     private String responseLog;

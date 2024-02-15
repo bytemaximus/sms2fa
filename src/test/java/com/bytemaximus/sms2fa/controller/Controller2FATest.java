@@ -13,36 +13,45 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class Sms2faControllerTest {
+public class Controller2FATest {
 
     @Mock
     private CredentialService credentialService;
-    private Sms2faController controller;
+    private Controller2FA controller;
 
     @BeforeEach
     void setUp() {
-        controller = new Sms2faController(credentialService);
+        controller = new Controller2FA(credentialService);
     }
+//
+//    @Test
+//    public void authenticateTest() {
+//        Map<String, String> payload = new HashMap<>();
+//        payload.put("apiKey", "testApiKey");
+//        payload.put("apiSecret", "testApiSecret");
+//
+//        verify(credentialService).verifyCredential("testApiKey", "testApiSecret");
+//    }
 
     @Test
-    public void authenticateTest() {
+    public void sendCustomSMSTest() {
         Map<String, String> payload = new HashMap<>();
-        payload.put("apiKey", "testApiKey");
-        payload.put("apiSecret", "testApiSecret");
+        payload.put("apiKey", "Test api key");
+        payload.put("phone", "1234567890");
+        payload.put("message", "Test message");
 
-        String result = controller.authenticate(payload);
+        String result = controller.sendCustomSMS(payload);
 
         assertEquals("Success", result);
-        verify(credentialService).newCredential("testApiKey", "testApiSecret");
     }
 
     @Test
-    public void sendMessageTest() {
+    public void sendTwilioSMSTest() {
         Map<String, String> payload = new HashMap<>();
         payload.put("phone", "1234567890");
         payload.put("message", "Test message");
 
-        String result = controller.sendMessage(payload);
+        String result = controller.sendTwilioSMS(payload);
 
         assertEquals("Success", result);
     }

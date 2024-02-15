@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Sms2faApplication {
+public class Application2FA {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Sms2faApplication.class, args);
+		SpringApplication.run(Application2FA.class, args);
 	}
-
 }

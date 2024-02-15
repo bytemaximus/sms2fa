@@ -1,0 +1,47 @@
+Configuration:
+  status: warn
+  name: Default
+  properties:
+    property:
+      name: filename
+      value: logs/2fa.log
+  thresholdFilter:
+    level: debug
+
+  Appenders:
+
+    Console:
+      - name: STDOUT
+        target: SYSTEM_OUT
+        PatternLayout:
+#          Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight{%-5level}{STYLE=Logback} %logger.%M - %msg%n"
+          Pattern: "%highlight{%5p- %d{yy-MM-dd HH:mm:ss.SSS}} %clr{${sys:PID}}{magenta}%clr{-}{faint}%clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan}  %highlight{: %m%n%xwEx}"
+#          Pattern: "%highlight{%d{yyyy-MM-dd HH:mm:ss} %p %m%n}{FATAL=bright_red, ERROR=bright_red, WARN=yellow, INFO=blue, DEBUG=green, TRACE=white}"
+#          Pattern: "%highlight{%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level %logger{36}.%M() @%L - %msg%n}{FATAL=Bright red, ERROR=Bright red, WARN=Yellow, INFO=Blue, DEBUG=Green, TRACE=White}"
+  #        Pattern: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n"
+
+    File:
+      - name: FILE
+        fileName: ${filename}
+        PatternLayout:
+          Pattern: "%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n"
+        Filters:
+          ThresholdFilter:
+            level: error
+
+  Loggers:
+
+    Root:
+      level: info
+      AppenderRef:
+        - ref: STDOUT
+
+    Logger:
+      - name: com.bytemaximus.sms2fa.controller
+        additivity: false
+        level: debug
+        AppenderRef:
+          - ref: STDOUT
+            level: debug
+          - ref: FILE
+            level: info

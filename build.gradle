@@ -16,21 +16,34 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	implementation.exclude module: 'spring-boot-starter-logging'
+	implementation.exclude group: 'ch.qos.logback'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.logging.log4j:log4j-core:2.22.1'
+	implementation 'org.apache.logging.log4j:log4j-api:2.22.1'
+	implementation 'org.json:json:20240205'
 
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1'
 	implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.29'
+	implementation 'de.taimos:totp:1.0'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 
+	developmentOnly 'org.fusesource.jansi:jansi:2.4.1'
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-
+	providedRuntime 'org.slf4j:slf4j-nop:2.0.12'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedRuntime 'com.h2database:h2'
+	providedRuntime 'io.jsonwebtoken:jjwt-impl:0.12.5'
+	providedRuntime 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
