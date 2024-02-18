@@ -2,7 +2,6 @@ package com.bytemaximus.sms2fa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.taimos.totp.TOTP;
 import jakarta.persistence.*;
 import lombok.*;
 

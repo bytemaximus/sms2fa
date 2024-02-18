@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bytemaximus MFA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <div th:switch="${tokens}">
+        <h2 th:case="null">No tokens available yet!</h2>
+        <div class="table-container" th:case="*">
+            <h2>Tokens Available</h2>
+            <table class="table table-dark table-striped table-responsive-md table-bordered">
+                <thead>
+                <tr>
+                    <th>JWT</th>
+                    <th>Expiry Date</th>
+                    <th>Response Log</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="token : ${tokens}">
+                    <td th:text="${token.jwt}"></td>
+                    <td th:text="${token.expireAt}"></td>
+                    <td th:text="${token.responseLog}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/addtoken" class="button">Add a new token</a></p>
+    </div>
+    <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
+    <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js></script>
+</div>
+</body>
+</html>

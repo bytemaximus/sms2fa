@@ -23,15 +23,20 @@ public class Controller2FATest {
     void setUp() {
         controller = new Controller2FA(credentialService);
     }
-//
-//    @Test
-//    public void authenticateTest() {
-//        Map<String, String> payload = new HashMap<>();
-//        payload.put("apiKey", "testApiKey");
-//        payload.put("apiSecret", "testApiSecret");
-//
-//        verify(credentialService).verifyCredential("testApiKey", "testApiSecret");
-//    }
+
+    @Test
+    public void verifyCredentialTest() {
+        String apiKey = "testApiKey";
+        String apiSecret = "testApiSecret";
+
+        Map<String, String> payload = new HashMap<>();
+        payload.put("apiKey", apiKey);
+        payload.put("apiSecret", apiSecret);
+
+        controller.authenticate(payload);
+
+        verify(credentialService).verifyCredential(apiKey, apiSecret);
+    }
 
     @Test
     public void sendCustomSMSTest() {
