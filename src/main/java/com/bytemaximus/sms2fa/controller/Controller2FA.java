@@ -1,6 +1,7 @@
 package com.bytemaximus.sms2fa.controller;
 
 import com.bytemaximus.sms2fa.service.CredentialService;
+import com.bytemaximus.sms2fa.service.TwilioService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +15,11 @@ import java.util.Map;
 public class Controller2FA {
 
     private CredentialService credentialService;
+    private TwilioService twilioService;
 
-    public Controller2FA(CredentialService credentialService) {
+    public Controller2FA(CredentialService credentialService, TwilioService twilioService) {
         this.credentialService = credentialService;
+        this.twilioService = twilioService;
     }
 
     @PostMapping(
@@ -36,11 +39,27 @@ public class Controller2FA {
             value = "/sms/twilio")
     public String sendTwilioSMS(@RequestBody Map<String, String> payload) {
         String phone = payload.get("phone");
-        String message = payload.get("message");
 
-        log.debug("Received new Twilio sms request with phone number: {} and message: {}", phone, message);
+        log.debug("Received new Twilio sms request with phone number: {}", phone);
 
-        return "Success";
+        twilioService.sendTwilioSMS(phone);
+
+        return "Your request has been received.";
+    }
+
+    @PostMapping(
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            value = "/sms/twilio/verify")
+    public String verifyTwilioSMS(@RequestBody Map<String, String> payload) {
+        String code = payload.get("code");
+        String phone = payload.get("phone");
+
+        log.debug("Received new Twilio verify request with code: {} and phone number: {}", code, phone);
+
+        twilioService.verifyTwilioSMS(code, phone);
+
+        return "Your request has been received.";
     }
 
     @PostMapping(
@@ -54,7 +73,7 @@ public class Controller2FA {
 
         log.debug("Received new custom sms request with phone number: {} and message: {}", phone, message);
 
-        return "Success";
+        return "Your request has been received.";
     }
 
     @PostMapping(
